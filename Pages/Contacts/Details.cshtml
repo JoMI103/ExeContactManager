@@ -1,0 +1,19 @@
+@page "{id:int}"
+@model ContactManager.Pages.Contacts.DetailsModel
+
+<h2>Contact Details</h2>
+
+<div>
+    <p><strong>Name:</strong> @Model.Contact?.Name</p>
+    <p><strong>Contact:</strong> @Model.Contact?.ContactNumber</p>
+    <p><strong>Email:</strong> @Model.Contact?.Email</p>
+</div>
+
+<a asp-page="Edit" asp-route-id="@Model.Contact?.ID" class="btn btn-primary">Edit</a>
+
+<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Contact?.ID" style="display:inline">
+
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+
+<a asp-page="Index" class="btn btn-secondary">Back</a>
