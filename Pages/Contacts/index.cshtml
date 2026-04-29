@@ -1,0 +1,38 @@
+@page
+@model ContactManager.Pages.Contacts.IndexModel
+
+<h2>Contacts @Model.NumContacts</h2>
+<a class="btn btn-primary" asp-page="Create">Add Contact</a>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        @foreach (var item in Model.Contacts)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.ContactNumber</td>
+                <td>@item.Email</td>
+                <td>
+                    <a asp-page="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="Edit" asp-route-id="@item.ID">Edit</a> |
+                
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.ID" style="display:inline">
+                        <button class="btn btn-link text-danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        
+        
+        }
+    </tbody>
+</table>
