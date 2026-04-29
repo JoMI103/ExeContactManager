@@ -1,5 +1,6 @@
 using ContactManager.Data;
 using ContactManager.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<ContactService>();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login";
+    });
+
+builder.Services.AddAuthorization();
+
+
+
 var app = builder.Build();
+
+
 
 if (!app.Environment.IsDevelopment())
 {
@@ -23,7 +36,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapRazorPages();
+
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/Contacts/Index");
+    return Task.CompletedTask;
+});
 
 using (var scope = app.Services.CreateScope())
 {
