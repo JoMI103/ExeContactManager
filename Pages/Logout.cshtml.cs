@@ -9,6 +9,6 @@ public class LogoutModel : PageModel
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        return RedirectToPage("Privacy");
+        return RedirectToPage("/Contacts/Index");
     }
 }
