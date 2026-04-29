@@ -9,11 +9,13 @@
     <p><strong>Email:</strong> @Model.Contact?.Email</p>
 </div>
 
-<a asp-page="Edit" asp-route-id="@Model.Contact?.ID" class="btn btn-primary">Edit</a>
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <a asp-page="Edit" asp-route-id="@Model.Contact?.ID" class="btn btn-primary">Edit</a>
 
-<form method="post" asp-page-handler="Delete" asp-route-id="@Model.Contact?.ID" style="display:inline">
+    <form method="post" asp-page-handler="Delete" asp-route-id= "@Model.Contact?.ID" style="display:inline">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    }
 
-    <button type="submit" class="btn btn-danger">Delete</button>
-</form>
-
-<a asp-page="Index" class="btn btn-secondary">Back</a>
+    <a asp-page="Index" class="btn btn-secondary">Back</a>

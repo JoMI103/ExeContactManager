@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ContactManager.Data;
 using ContactManager.Models;
 using ContactManager.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ContactManager.Pages.Contacts
 {
+    [AllowAnonymous]
+
     public class DetailsModel(ContactService contactService) : PageModel
     {
         private readonly ContactService _contactService = contactService;

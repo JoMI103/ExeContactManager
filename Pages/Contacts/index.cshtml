@@ -2,7 +2,11 @@
 @model ContactManager.Pages.Contacts.IndexModel
 
 <h2>Contacts @Model.NumContacts</h2>
-<a class="btn btn-primary" asp-page="Create">Add Contact</a>
+
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <a asp-page="Create" class="btn btn-primary">Add Contact</a>
+}
 
 <table class="table mt-3">
     <thead>
@@ -23,16 +27,24 @@
                 <td>@item.ContactNumber</td>
                 <td>@item.Email</td>
                 <td>
+                    
                     <a asp-page="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-page="Edit" asp-route-id="@item.ID">Edit</a> |
-                
-                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.ID" style="display:inline">
-                        <button class="btn btn-link text-danger" type="submit">Delete</button>
-                    </form>
+                    @if(User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-page="Edit" asp-route-id="@item.ID">Edit</a>
+
+                        <form method="post" asp-page-handler="Delete" asp-route-id = "@item.ID" style="display:inline">
+                            <button class="btn btn-link text-danger">Delete</button>
+                        </form>
+                 
+                    }
                 </td>
             </tr>
+
         
-        
+
+     
         }
     </tbody>
+
 </table>

@@ -3,9 +3,12 @@ using ContactManager.Data;
 using ContactManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using ContactManager.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ContactManager.Pages.Contacts
 {
+
+    [AllowAnonymous]
     public class IndexModel(ContactService contactService) : PageModel
     {
         private readonly ContactService _contactService = contactService;
