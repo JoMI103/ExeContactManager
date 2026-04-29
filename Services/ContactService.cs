@@ -14,8 +14,28 @@ namespace ContactManager.Services
 
         public void Create(Contact contact)
         {
-            contact.IsDeleted = false;
+            var existingContact = _context.Contacts
+                .FirstOrDefault(c =>
+                    c.Email == contact.Email ||
+                    c.ContactNumber == contact.ContactNumber);
 
+            if (existingContact != null)
+            {
+                if (!existingContact.IsDeleted)
+                {
+                    return;
+                }
+
+                existingContact.IsDeleted = false;
+                existingContact.Name = contact.Name;
+                existingContact.Email = contact.Email;
+                existingContact.ContactNumber = contact.ContactNumber;
+
+                _context.SaveChanges();
+                return;
+            }
+
+            contact.IsDeleted = false;
             _context.Contacts.Add(contact);
             _context.SaveChanges();
         }
